@@ -1,0 +1,51 @@
+---
+- hosts: "my"
+  become: true
+
+  tasks:
+    - name: "Initialize repo"
+      shell: |
+        wget https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu22.04_all.deb &&
+        dpkg -i zabbix-release_latest_7.4+ubuntu22.04_all.deb
+
+    - name: "Install zabbix agent"
+      apt:
+        name: zabbix-agent
+        state: present
+        update_cache: yes
+
+    - name: "Change zabbix server address"
+      lineinfile:
+        path: /etc/zabbix/zabbix_agentd.conf
+        regexp: '^Server=127.0.0.1'
+        line: Server=192.168.56.21,192.168.56.11,192.168.56.12,127.0.0.1
+      notify:
+        - Restart zabbix agent
+
+    - name: "Enable zabbix agent on boot"
+      service:
+        name: zabbix-agent
+        enabled: yes
+
+    - name: "Copy user configs and parameters"
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "0755"
+      loop:
+        - src: /etc/zabbix/zabbix.agentd.d/task6.conf
+          dest: /etc/zabbix/zabbix.agentd.d/
+        - src: /etc/zabbix/zabbix.agentd.d/task6.sh
+          dest: /etc/zabbix/zabbix.agentd.d/
+        - src: /etc/zabbix/zabbix.agentd.d/test_user_parameter.py
+          dest: /etc/zabbix/zabbix.agentd.d/
+      notify:
+        - Restart zabbix agent
+
+  handlers:
+    - name: Restart zabbix agent
+      service:
+        name: zabbix-agent
+        state: restarted
