@@ -16,6 +16,9 @@
 
 ### Решение 1
 
+![Список шаблонов](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t1-1.png)
+![Итемы шаблона задания 1](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t1-2.png)
+
 ---
 
 ### Задание 2
@@ -50,6 +53,8 @@
  
 ### Решение 2-3
 
+![Резултаты выполнения заданий 2 и 3](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t3.png)
+
 ---
 
 ### Задание 4
@@ -66,6 +71,8 @@
  ---
 
 ### Решение 4
+
+![Резултаты выполнения заданий 2 и 3](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t4.png)
 
 ---
 
@@ -84,6 +91,8 @@
 
 ### Решение 5
 
+![Резултаты выполнения задания 5](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t5.png)
+
 ---
 
 ### Задание 6* со звёздочкой
@@ -97,6 +106,21 @@
  ---
 
 ### Решение 6
+
+```bash
+#!/bin/bash
+
+label="$1"
+if [[ $label == 1 ]]; then
+    echo "Муртазин Ильяс Асхатович"
+elif [[ $label == 2 ]]; then
+    echo $(date "+%Y-%m-%d")
+else
+    echo "Неизвестный ключ"
+fi
+```
+
+![Резултаты выполнения задания 6](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t6.png)
 
 ---
 
@@ -113,6 +137,27 @@
 
 ### Решение 7
 
+```python
+import sys
+import os
+import re
+import datetime
+if (sys.argv[1] == '-ping'):
+        result=os.popen("ping -c 1 " + sys.argv[2]).read()
+        result=re.findall(r"time=(.*) ms", result)
+        print(result[0])
+elif (sys.argv[1] == '-simple_print'):
+        print(sys.argv[2])
+elif (sys.argv[1] == '1'):
+        print('Муртазин Ильяс Асхатович')
+elif (sys.argv[1] == '2'):
+        print(datetime.date.today())
+else:
+        print(f"unknown input: {sys.argv[1]}")
+```
+
+![Резултаты выполнения задания 7](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t7.png)
+
 ---
 
 ### Задание 8* со звёздочкой
@@ -126,6 +171,9 @@
 
 ### Решение 8
 
+![Правила обнаружения](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t8-1.png)
+![Страница Discovery](https://github.com/murtazinilyas/zabbix_part2/blob/main/scshots/z2_t8-2.png)
+
 ---
 
 ### Задание 9* со звёздочкой
@@ -138,3 +186,8 @@
 
 ### Решение 9
 
+Сделал это задание с использованием Ansible
+
+[Vagrantfile](https://github.com/murtazinilyas/zabbix_part2/blob/main/Vagrantfile)
+
+[playbook.yml](https://github.com/murtazinilyas/zabbix_part2/blob/main/playbook.yml)
